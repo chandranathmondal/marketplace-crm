@@ -40,6 +40,7 @@
   color: #374151;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 8px; /* Increase the padding to make space for a larger icon */
 }
 
 .icon-button:hover {
