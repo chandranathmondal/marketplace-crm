@@ -57,22 +57,39 @@ export function findMagicBricksDetailMountTarget(): ListingMountTarget | null {
 
   const insertBefore =
     findShortlistButton(document) ??
-    findActionButton(document, ['share', 'contact owner', 'contact seller', 'save']);
+    findActionButton(document, ['share', 'contact owner', 'contact seller', 'save', 'enquire']);
 
   if (insertBefore) {
     return { listing, insertBefore, overlayContainer: null };
   }
 
-  return {
-    listing,
-    insertBefore: null,
-    overlayContainer:
-      findImageContainer(
-        document.querySelector<HTMLElement>(
-          '[class*="pdp"], [class*="photo"], [class*="gallery"], main',
-        ) ?? document.body,
-      ) ?? document.body,
-  };
+  // Try to find image container in various locations
+  const imageSearchRoot =
+    document.querySelector<HTMLElement>(
+      '[class*="pdp"], [class*="photo"], [class*="gallery"], main, [class*="detail"], [class*="hero"]',
+    ) ?? document.querySelector<HTMLElement>('section') ?? document.body;
+
+  const imageContainer = findImageContainer(imageSearchRoot);
+
+  if (imageContainer && imageContainer !== document.body) {
+    return {
+      listing,
+      insertBefore: null,
+      overlayContainer: imageContainer,
+    };
+  }
+
+  // Fallback: look for any prominent image on the page
+  const img = document.querySelector<HTMLImageElement>('img[src]:not([src^="data:"])');
+  if (img?.parentElement && img.parentElement !== document.body) {
+    return {
+      listing,
+      insertBefore: null,
+      overlayContainer: img.parentElement,
+    };
+  }
+
+  return null;
 }
 
 export function findMagicBricksListMountTargets(): ListingMountTarget[] {

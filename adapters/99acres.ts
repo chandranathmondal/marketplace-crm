@@ -45,6 +45,8 @@ export function find99AcresDetailMountTarget(): ListingMountTarget | null {
     listing,
     insertBefore,
     overlayContainer: insertBefore ? null : findImageContainer(document.body),
+    slotClassName: insertBefore ? 'mcrm-inline-slot--99acres-detail' : undefined,
+    badgeClassName: 'mcrm-badge--rainbow',
   };
 }
 
@@ -63,14 +65,16 @@ export function find99AcresListMountTargets(): ListingMountTarget[] {
         'article, li, [class*="card"], [class*="tuple"], [class*="srp"]',
       ) ?? null;
 
-    const shortlist = cardRoot ? findShortlistButton(cardRoot) : target.insertBefore;
+    const overlayContainer = cardRoot ? findImageContainer(cardRoot) : target.overlayContainer;
 
     return {
       ...target,
-      insertBefore: shortlist,
-      overlayContainer: shortlist ? null : target.overlayContainer,
+      insertBefore: null,
+      overlayContainer,
+      slotClassName: undefined,
+      badgeClassName: 'mcrm-badge--rainbow',
     };
-  });
+  }).filter((target) => target.insertBefore || target.overlayContainer);
 }
 
 export const acres99Adapter: MarketplaceAdapter = {

@@ -11,6 +11,7 @@ import {
 export default function OptionsApp() {
   const [apiUrl, setApiUrl] = useState('');
   const [spreadsheetId, setSpreadsheetId] = useState('');
+  const [whatsappMode, setWhatsappMode] = useState<'web' | 'desktop'>('web');
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
 
@@ -18,6 +19,7 @@ export default function OptionsApp() {
     getSettings().then((settings) => {
       setApiUrl(settings.apiUrl);
       setSpreadsheetId(settings.spreadsheetId);
+      setWhatsappMode(settings.whatsappMode);
     });
   }, []);
 
@@ -40,6 +42,7 @@ export default function OptionsApp() {
     await saveSettings({
       apiUrl: normalizeAppsScriptUrl(apiUrl),
       spreadsheetId,
+      whatsappMode,
     });
 
     setStatus('Settings saved');
@@ -93,6 +96,46 @@ export default function OptionsApp() {
           value={spreadsheetId}
           onChange={(event) => setSpreadsheetId(event.target.value)}
         />
+      </label>
+
+      <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', marginBottom: '16px' }}>
+        <span>WhatsApp Integration</span>
+        <div style={{ display: 'flex', alignItems: 'center', background: '#e5e7eb', borderRadius: '20px', padding: '2px', gap: '2px' }}>
+          <button
+            type="button"
+            onClick={() => setWhatsappMode('web')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: '16px',
+              border: 'none',
+              background: whatsappMode === 'web' ? '#25d366' : 'transparent',
+              color: whatsappMode === 'web' ? '#fff' : '#6b7280',
+              fontWeight: whatsappMode === 'web' ? '600' : '500',
+              cursor: 'pointer',
+              fontSize: '12px',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            Web
+          </button>
+          <button
+            type="button"
+            onClick={() => setWhatsappMode('desktop')}
+            style={{
+              padding: '8px 16px',
+              borderRadius: '16px',
+              border: 'none',
+              background: whatsappMode === 'desktop' ? '#25d366' : 'transparent',
+              color: whatsappMode === 'desktop' ? '#fff' : '#6b7280',
+              fontWeight: whatsappMode === 'desktop' ? '600' : '500',
+              cursor: 'pointer',
+              fontSize: '12px',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            Desktop
+          </button>
+        </div>
       </label>
 
       <div className="actions">

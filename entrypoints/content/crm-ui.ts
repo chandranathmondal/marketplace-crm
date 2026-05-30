@@ -185,12 +185,24 @@ export async function openListingModal(
     syncWhatsAppButton();
   });
 
-  whatsappButton?.addEventListener('click', () => {
-    const whatsappUrl = getWhatsAppUrl(phoneInput?.value ?? '');
-
-    if (whatsappUrl) {
-      window.open(whatsappUrl, '_blank');
+  whatsappButton?.addEventListener('click', async () => {
+    const settings = await getSettings();
+    const phone = phoneInput?.value ?? '';
+    
+    if (!phone) return;
+    
+    const normalized = normalizePhoneNumber(phone).replace(/\D/g, '');
+    
+    if (!normalized) return;
+    
+    let url: string;
+    if (settings.whatsappMode === 'desktop') {
+      url = `whatsapp://send?phone=${normalized}`;
+    } else {
+      url = `https://web.whatsapp.com/send?phone=${normalized}`;
     }
+    
+    window.open(url, '_blank');
   });
 
   syncWhatsAppButton();

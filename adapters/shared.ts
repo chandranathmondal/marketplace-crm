@@ -47,6 +47,11 @@ export function findActionButton(
 }
 
 export function findShortlistButton(root: ParentNode) {
+  const shortlistByDataLabel = root.querySelector<HTMLElement>('[data-label="SHORTLIST" i], [data-label="shortlist" i]');
+  if (shortlistByDataLabel) {
+    return shortlistByDataLabel;
+  }
+
   return findActionButton(root, ['shortlist', 'short-list', 'save property']);
 }
 

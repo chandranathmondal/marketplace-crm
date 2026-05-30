@@ -1,6 +1,7 @@
 export type ExtensionSettings = {
   apiUrl: string;
   spreadsheetId: string;
+  whatsappMode: 'web' | 'desktop';
 };
 
 export const SETTINGS_STORAGE_KEY = 'marketplaceCrmSettings';
@@ -8,6 +9,7 @@ export const SETTINGS_STORAGE_KEY = 'marketplaceCrmSettings';
 export const DEFAULT_SETTINGS: ExtensionSettings = {
   apiUrl: '',
   spreadsheetId: '',
+  whatsappMode: 'web',
 };
 
 /** Must match MARKETPLACE_CRM_API_VERSION in apps-scriptapps-script/Code.gs */

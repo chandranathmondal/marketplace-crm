@@ -1,5 +1,10 @@
 .mcrm-badge-host {
   position: relative !important;
+  overflow: hidden !important;
+}
+
+.mcrm-badge-host[data-mcrm-key*="99acres:"] {
+  overflow: visible !important;
 }
 
 @property --mcrm-rainbow-angle {
@@ -20,9 +25,26 @@
   transform: translate(-16px, -5px);
 }
 
+._19YLB .mcrm-badge--overlay {
+  top: 20px !important;
+}
+
+li:has(._19YLB) figure.mcrm-badge-host .mcrm-badge--overlay {
+  top: 12px !important;
+}
+
 .mcrm-inline-slot--olx-detail {
   margin-right: 10px;
-  transform: translateY(-6px);
+}
+
+.mcrm-inline-slot--99acres-detail {
+  margin-right: 10px;
+}
+
+.mcrm-inline-slot--99acres-detail .mcrm-badge {
+  position: relative !important;
+  top: -2px !important;
+  right: -4px !important;
 }
 
 .mcrm-badge {
@@ -49,9 +71,9 @@
 
 .mcrm-badge--overlay {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2147483646;
+  top: 6px;
+  right: 50px;
+  z-index: auto;
   max-width: none;
   width: auto;
   height: auto;
@@ -68,6 +90,14 @@
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.14);
 }
 
+[data-mcrm-key*="99acres:"] .mcrm-badge--overlay {
+  top: -2px !important;
+  right: 40px !important;
+  left: auto !important;
+  transform: none !important;
+  z-index: 10 !important;
+}
+
 @keyframes mcrm-rainbow-border {
   to { --mcrm-rainbow-angle: 360deg; }
 }
@@ -76,6 +106,8 @@
   position: static;
   max-width: none;
   box-shadow: none;
+  position: relative;
+  top: -6px;
 }
 
 .mcrm-badge--rainbow {
@@ -113,7 +145,7 @@
 }
 
 .mcrm-modal {
-  width: min(480px, calc(100vw - 32px));
+  width: min(540px, calc(100vw - 32px));
   max-height: min(90vh, 760px);
   overflow: auto;
   border-radius: 16px;
@@ -209,9 +241,11 @@
 
 .mcrm-status-grid {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: 6px;
   margin-bottom: 14px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 
 .mcrm-status-pill {
@@ -219,11 +253,13 @@
   background: var(--pill-bg);
   color: var(--pill-color);
   border-radius: 999px;
-  padding: 8px 12px;
-  font-size: 11px;
+  padding: 6px 10px;
+  font-size: 10px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .mcrm-status-pill:hover {
